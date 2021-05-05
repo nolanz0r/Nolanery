@@ -1,6 +1,6 @@
 # Nolanery - image gallery application
 
-## Stack
+**Stack**
 - React (hooks)
 - Redux
 - Firebase
