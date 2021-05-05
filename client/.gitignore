@@ -4,7 +4,6 @@
 /node_modules
 /.pnp
 .pnp.js
-/.firebase
 
 
 # testing
@@ -12,6 +11,11 @@
 
 # production
 /build
+
+# Firebase Hosting
+.firebaserc
+firebase-debug.log
+/.firebase
 
 # misc
 .DS_Store
