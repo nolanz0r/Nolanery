@@ -1,0 +1,29 @@
+.cardButton {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  margin: 3px;
+  pointer-events: all;
+}
+
+.cardIcon {
+  font-size: 26px;
+  fill: #fff;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.cardLikedIcon {
+  font-size: 26px;
+  fill: crimson;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}

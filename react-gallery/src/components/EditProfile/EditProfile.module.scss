@@ -1,0 +1,58 @@
+.editWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.field {
+  width: 100%;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  display: flex;
+}
+
+.fieldName {
+  width: 30%;
+}
+
+.editAvatar {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #c7c7c7;
+
+  span {
+    font-size: 24px;
+  }
+
+  input {
+    display: none;
+  }
+  label {
+    margin-right: 10px;
+    font-size: 17px;
+    padding-left: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      color: #333;
+    }
+  }
+}
+
+.editName {
+  border-bottom: 1px solid #c7c7c7;
+
+  input {
+    width: 70%;
+    padding: 4px;
+    border-radius: 5px;
+    font-size: 16px;
+    border: 1px solid #c7c7c7;
+    outline: none;
+  }
+  label {
+    font-size: 17px;
+    padding-right: 10px;
+  }
+}

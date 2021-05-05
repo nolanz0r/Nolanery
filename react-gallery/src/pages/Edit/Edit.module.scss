@@ -1,0 +1,35 @@
+.edit {
+  height: calc(100vh - 70px);
+}
+
+.tabs {
+  height: 8%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #c7c7c7;
+}
+
+.tab {
+  padding: 10px;
+  font-size: 20px;
+  color: #3e3e3e;
+  margin: 0 10px;
+  display: flex;
+  align-items: center;
+  border-bottom: 3px solid transparent;
+
+  svg {
+    margin-right: 7px;
+    font-size: 24px;
+  }
+
+  &:hover {
+    color: #000;
+  }
+}
+
+.active {
+  color: #000;
+  border-bottom: 3px solid #3e3e3e;
+}
