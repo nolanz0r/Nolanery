@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { logoutAction } from "../../store/actions/auth";
 import { CgProfile } from "react-icons/cg";
 import { HiOutlineLogout } from "react-icons/hi";
-import { AiFillFire } from "react-icons/ai";
+import { AiFillFire, AiFillHeart, AiTwotoneStar } from "react-icons/ai";
 
 import Avatar from "../Avatar";
 import Logo from "../Logo";
@@ -45,6 +45,26 @@ const Navbar = () => {
           <ul className={classes.list}>
             {loggedIn ? (
               <>
+                <li className={classes.listItem}>
+                  <NavLink
+                    className={classes.listLink}
+                    activeClassName={classes.active}
+                    to="/feed"
+                  >
+                    <AiTwotoneStar />
+                    Feed
+                  </NavLink>
+                </li>
+                <li className={classes.listItem}>
+                  <NavLink
+                    className={classes.listLink}
+                    activeClassName={classes.active}
+                    to="/liked"
+                  >
+                    <AiFillHeart />
+                    Liked
+                  </NavLink>
+                </li>
                 <li className={classes.listItem}>
                   <NavLink
                     className={classes.listLink}

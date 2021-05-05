@@ -15,6 +15,8 @@ import SetAvatar from "./pages/SetAvatar";
 import Edit from "./pages/Edit";
 
 import classes from "./styles/App.module.scss";
+import Liked from "./pages/Liked";
+import Feed from "./pages/Feed";
 
 function App() {
   const dispatch = useDispatch();
@@ -54,6 +56,8 @@ function App() {
                 <Route path="/edit" component={Edit} />
                 <Route path="/notfound" component={NotFound} />
                 <Route exact path="/trends" component={Trends} />
+                <Route path="/liked" component={Liked} />
+                <Route path="/feed" component={Feed} />
                 <Redirect from="/avatar" to="/" />
                 <Redirect from="/" to="/trends" />
                 <Redirect to="/notfound" />

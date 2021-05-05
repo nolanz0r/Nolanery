@@ -59,8 +59,6 @@ const Trends = () => {
         });
         const random = getArrayOfRandomNumbers(images.length);
 
-        console.log(images.length);
-
         images
           .filter((image, i) => random.includes(i) && image)
           .map((item) => {
