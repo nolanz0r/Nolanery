@@ -20,8 +20,6 @@ import {
   addImageAction,
   getImagesAction,
   getProfileDataAction,
-  addImageLikeAction,
-  removeImageLikeAction,
 } from "../../store/actions/profile";
 import Modal from "../../components/Modal";
 import { db, storage } from "../../firebase";
@@ -71,14 +69,6 @@ const Profile = () => {
           .child(id)
           .remove()
       );
-  };
-
-  const addLikeHandler = (id) => {
-    dispatch(addImageLikeAction(id, match.params.id, user.id));
-  };
-
-  const removeLikeHandler = (id, likes) => {
-    dispatch(removeImageLikeAction(id, match.params.id, user.id, likes));
   };
 
   useEffect(() => {
@@ -169,9 +159,12 @@ const Profile = () => {
                     deleteImageHandler={() =>
                       deleteImageHandler(id, image.imageName)
                     }
-                    addLikeHandler={() => addLikeHandler(id)}
-                    removeLikeHandler={() => removeLikeHandler(id, image.likes)}
                     onClick={() => openImageModalHandler(i)}
+                    data={{
+                      id: id,
+                      visitorId: match.params.id,
+                      image: image,
+                    }}
                     liked={
                       image.likes &&
                       Object.values(image.likes).includes(user.id)

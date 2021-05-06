@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
 
 import { db } from "../../firebase";
-import Avatar from "../../components/Avatar";
 import Loader from "../../components/Loader";
 import { getArrayOfRandomNumbers } from "../../utils/randomNumbersArray";
 
 import classes from "./Trends.module.scss";
+import PageImage from "../../components/PageImage";
 
 const Trends = () => {
   const [images, setImages] = useState([]);
@@ -98,38 +97,16 @@ const Trends = () => {
   }, [loadRef]);
 
   return (
-    <div className="container fade">
-      <div className={classes.trends}>
-        {images.length !== 0 &&
-          images.flat().map((data) => (
-            <div key={data.id} className={classes.card}>
-              <div className={classes.cardHeader}>
-                <Link to={`/profile/${data.user.id}`}>
-                  <Avatar src={data.user.avatar} width="50px" height="50px" />
-                  <span>{data.user.name}</span>
-                  <span>{data.user.lastName}</span>
-                </Link>
-              </div>
-              <div>
-                <img
-                  src={data.image.imageUrl}
-                  className={classes.image}
-                  alt={data.user.name}
-                />
-              </div>
-              <span>{data.image.createdAt}</span>
-            </div>
-          ))}
-        <div
-          ref={loadRef}
-          className={
-            !images.length ? classes.loaderWrapper : classes.loadMoreLoader
-          }
-        >
-          <Loader width="60px" />
-        </div>
+    <PageImage images={images.flat()}>
+      <div
+        ref={loadRef}
+        className={
+          !images.length ? classes.loaderWrapper : classes.loadMoreLoader
+        }
+      >
+        <Loader width="60px" />
       </div>
-    </div>
+    </PageImage>
   );
 };
 

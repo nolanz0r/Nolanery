@@ -20,6 +20,7 @@ const Card = ({
   deleteImageHandler,
   addLikeHandler,
   removeLikeHandler,
+  data,
   liked,
 }) => {
   const [loaded, setLoader] = useState(false);
@@ -37,6 +38,7 @@ const Card = ({
       <div className={classes.cardOverlay}>
         <ToggleLike
           liked={liked}
+          data={data}
           addLikeHandler={addLikeHandler}
           removeLikeHandler={removeLikeHandler}
         />

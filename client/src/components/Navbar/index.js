@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { logoutAction } from "../../store/actions/auth";
 import { CgProfile } from "react-icons/cg";
 import { HiOutlineLogout } from "react-icons/hi";
-import { AiFillFire, AiFillHeart, AiTwotoneStar } from "react-icons/ai";
+import { AiFillFire, AiFillHeart, AiFillStar } from "react-icons/ai";
 
 import Avatar from "../Avatar";
 import Logo from "../Logo";
@@ -51,7 +51,7 @@ const Navbar = () => {
                     activeClassName={classes.active}
                     to="/feed"
                   >
-                    <AiTwotoneStar />
+                    <AiFillStar />
                     Feed
                   </NavLink>
                 </li>

@@ -59,12 +59,14 @@ export const addImageLikeAction = (imageId, imageUserId, userId) => {
       db.ref("images/" + imageUserId + "/" + imageId)
         .child("likes")
         .push(userId);
+
+      db.ref("liked/" + userId).push({ imageId, imageUserId });
     } catch (e) {}
   };
 };
 
-export const removeImageLikeAction = (imageId, imageUserId, userId, likes) => {
-  const [id] = Object.entries(likes).map(([a, b]) => b === userId && a);
+export const removeImageLikeAction = (imageId, imageUserId, userId, image) => {
+  const [id] = Object.entries(image.likes).map(([a, b]) => b === userId && a);
   return (dispatch) => {
     try {
       db.ref("images/" + imageUserId + "/" + imageId)
