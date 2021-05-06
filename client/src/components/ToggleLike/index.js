@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -14,26 +14,29 @@ const ToggleLike = ({ data, liked }) => {
   const { user } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
 
+  const [like, setLike] = useState(liked || false);
+
   const addLikeHandler = () => {
+    setLike(true);
     dispatch(addImageLikeAction(id, visitorId, user.id));
   };
 
   const removeLikeHandler = () => {
+    setLike(false);
     dispatch(removeImageLikeAction(id, visitorId, user.id, image));
   };
 
   return (
-    <>
-      {!liked ? (
-        <button className={classes.cardButton} onClick={addLikeHandler}>
-          <AiOutlineHeart className={classes.cardIcon} />
-        </button>
+    <button className={classes.cardButton}>
+      {!like ? (
+        <AiOutlineHeart className={classes.cardIcon} onClick={addLikeHandler} />
       ) : (
-        <button className={classes.cardButton} onClick={removeLikeHandler}>
-          <AiFillHeart className={classes.cardLikedIcon} />
-        </button>
+        <AiFillHeart
+          className={classes.cardLikedIcon}
+          onClick={removeLikeHandler}
+        />
       )}
-    </>
+    </button>
   );
 };
 

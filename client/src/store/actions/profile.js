@@ -66,12 +66,26 @@ export const addImageLikeAction = (imageId, imageUserId, userId) => {
 };
 
 export const removeImageLikeAction = (imageId, imageUserId, userId, image) => {
-  const [id] = Object.entries(image.likes).map(([a, b]) => b === userId && a);
+  const [id] =
+    image.likes &&
+    Object.entries(image.likes).map(([a, b]) => b === userId && a);
+
   return (dispatch) => {
     try {
       db.ref("images/" + imageUserId + "/" + imageId)
         .child("likes/" + id)
         .remove();
+
+      db.ref("liked/" + userId).once("value", (snap) => {
+        snap.forEach(
+          (item) =>
+            item.val().imageId === imageId &&
+            db
+              .ref("liked/" + userId)
+              .child(item.key)
+              .remove()
+        );
+      });
     } catch (e) {}
   };
 };
@@ -79,7 +93,7 @@ export const removeImageLikeAction = (imageId, imageUserId, userId, image) => {
 export const getImagesAction = (id) => {
   return (dispatch) => {
     try {
-      db.ref("images/" + id).on("value", (snap) => {
+      db.ref("images/" + id).once("value", (snap) => {
         if (snap.val()) {
           dispatch({
             type: GET_IMAGES,
