@@ -65,9 +65,21 @@ const Profile = () => {
       .delete()
       .then(
         db
-          .ref("images/" + match.params.id)
+          .ref("images/" + user.id)
           .child(id)
           .remove()
+      )
+      .then(
+        db.ref("liked/" + user.id).once("value", (snap) => {
+          snap.forEach(
+            (item) =>
+              item.val().imageId === id &&
+              db
+                .ref("liked/" + user.id)
+                .child(item.key)
+                .remove()
+          );
+        })
       );
   };
 

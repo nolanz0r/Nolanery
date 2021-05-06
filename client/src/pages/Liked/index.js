@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import Loader from "../../components/Loader";
 
 import PageImage from "../../components/PageImage";
 import { db } from "../../firebase";
@@ -9,6 +10,7 @@ import classes from "./Liked.module.scss";
 const Liked = () => {
   const { user } = useSelector((state) => state.authReducer);
   const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     db.ref("liked/" + user.id).once("value", (snap) => {
@@ -16,7 +18,7 @@ const Liked = () => {
         db.ref("images/" + item.val().imageUserId)
           .child(item.val().imageId)
           .once("value", (s) => {
-            db.ref("users/" + item.val().imageUserId).once("value", (user) => {
+            db.ref("users/" + item.val().imageUserId).on("value", (user) => {
               const data = {
                 id: item.val().imageId,
                 user: {
@@ -31,15 +33,25 @@ const Liked = () => {
             });
           });
       });
+
+      setLoading(false);
     });
   }, []);
 
   return (
     <>
-      {images.length > 0 ? (
-        <PageImage images={images} />
+      {loading ? (
+        <div className={classes.emptyTitle}>
+          <Loader width="60px" />
+        </div>
       ) : (
-        <h2 className={classes.emptyTitle}>No liked images</h2>
+        <>
+          {images.length > 0 ? (
+            <PageImage images={images} />
+          ) : (
+            <h2 className={classes.emptyTitle}>No liked images</h2>
+          )}
+        </>
       )}
     </>
   );
