@@ -15,7 +15,6 @@ export const getImagesAction = (id) => {
   return (dispatch) => {
     try {
       db.ref("images/" + id).once("value", (snap) => {
-        dispatch({ type: LOADING_IMAGES, payload: true });
         if (snap.val()) {
           dispatch({
             type: GET_IMAGES,
