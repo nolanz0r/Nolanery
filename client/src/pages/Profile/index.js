@@ -18,6 +18,8 @@ import NotFound from "../../components/NotFound";
 import ProgressBar from "../../components/ProgressBar";
 import {
   addImageAction,
+  getFollowers,
+  getFollowing,
   getImagesAction,
   getProfileDataAction,
 } from "../../store/actions/profile";
@@ -30,12 +32,10 @@ import ToggleFollow from "../../components/ToggleFollow";
 const Profile = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.authReducer);
-  const { progress, currentUser, images } = useSelector(
+  const { progress, currentUser, images, following, followers } = useSelector(
     (state) => state.profileReducer
   );
   const match = useRouteMatch();
-  const [followers, setFollowers] = useState(0);
-  const [following, setFollowing] = useState(0);
   const [current, setCurrent] = useState(null);
   const history = useHistory();
 
@@ -86,18 +86,8 @@ const Profile = () => {
   useEffect(() => {
     dispatch(getProfileDataAction(match.params.id));
     dispatch(getImagesAction(match.params.id));
-
-    db.ref("followers/" + match.params.id).on("value", (snap) => {
-      snap.val()
-        ? setFollowers(Object.keys(snap.val()).length)
-        : setFollowers(0);
-    });
-
-    db.ref("following/" + match.params.id).on("value", (snap) => {
-      snap.val()
-        ? setFollowing(Object.keys(snap.val()).length)
-        : setFollowing(0);
-    });
+    dispatch(getFollowers(match.params.id));
+    dispatch(getFollowing(match.params.id));
   }, [match, dispatch]);
 
   return (

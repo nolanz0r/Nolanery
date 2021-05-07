@@ -23,10 +23,12 @@ const ToggleFollow = ({ id }) => {
   };
 
   useEffect(() => {
-    db.ref("following/" + user.id).on("value", (snap) => {
-      snap.val() && setFollow(Object.values(snap.val()).includes(id));
+    db.ref("following/" + user.id).once("value", (snap) => {
+      if (snap.val()) {
+        setFollow(Object.values(snap.val()).includes(id));
+      }
     });
-  });
+  }, [user.id, id]);
 
   return (
     <div className={classes.buttons}>

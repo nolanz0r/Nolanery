@@ -4,6 +4,10 @@ import { v4 as uuidv4 } from "uuid";
 export const PROGRESS = "PROGRESS";
 export const PROFILE_DATA = "PROFILE_DATA";
 export const GET_IMAGES = "GET_IMAGES";
+export const GET_FOLLOWERS = "GET_FOLLOWERS";
+export const GET_FOLLOWING = "GET_FOLLOWING";
+export const ADD_FOLLOW = "ADD_FOLLOW";
+export const REMOVE_FOLLOW = "REMOVE_FOLLOW";
 
 export const addImageAction = (e, id) => {
   return async (dispatch) => {
@@ -114,6 +118,8 @@ export const followAction = (id, userId) => {
       db.ref("following/" + userId).push(id);
 
       db.ref("followers/" + id).push(userId);
+
+      dispatch({ type: ADD_FOLLOW });
     } catch (e) {}
   };
 };
@@ -131,6 +137,44 @@ export const unFollowAction = (id, userId) => {
         db.ref("followers/" + id)
           .child(snap.key)
           .remove();
+      });
+
+      dispatch({ type: REMOVE_FOLLOW });
+    } catch (e) {}
+  };
+};
+
+export const getFollowing = (id) => {
+  return (dispatch) => {
+    try {
+      db.ref("following/" + id).once("value", (snap) => {
+        snap.val()
+          ? dispatch({
+              type: GET_FOLLOWING,
+              payload: Object.keys(snap.val()).length,
+            })
+          : dispatch({
+              type: GET_FOLLOWING,
+              payload: 0,
+            });
+      });
+    } catch (e) {}
+  };
+};
+
+export const getFollowers = (id) => {
+  return (dispatch) => {
+    try {
+      db.ref("followers/" + id).once("value", (snap) => {
+        snap.val()
+          ? dispatch({
+              type: GET_FOLLOWERS,
+              payload: Object.keys(snap.val()).length,
+            })
+          : dispatch({
+              type: GET_FOLLOWERS,
+              payload: 0,
+            });
       });
     } catch (e) {}
   };
