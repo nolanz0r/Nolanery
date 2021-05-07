@@ -107,3 +107,31 @@ export const getImagesAction = (id) => {
     } catch (e) {}
   };
 };
+
+export const followAction = (id, userId) => {
+  return (dispatch) => {
+    try {
+      db.ref("following/" + userId).push(id);
+
+      db.ref("followers/" + id).push(userId);
+    } catch (e) {}
+  };
+};
+
+export const unFollowAction = (id, userId) => {
+  return (dispatch) => {
+    try {
+      db.ref("following/" + userId).once("child_added", (snap) => {
+        db.ref("following/" + userId)
+          .child(snap.key)
+          .remove();
+      });
+
+      db.ref("followers/" + id).once("child_added", (snap) => {
+        db.ref("followers/" + id)
+          .child(snap.key)
+          .remove();
+      });
+    } catch (e) {}
+  };
+};

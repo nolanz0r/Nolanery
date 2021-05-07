@@ -14,27 +14,30 @@ const Liked = () => {
 
   useEffect(() => {
     db.ref("liked/" + user.id).once("value", (snap) => {
-      snap.forEach((item) => {
-        db.ref("images/" + item.val().imageUserId)
-          .child(item.val().imageId)
-          .once("value", (s) => {
-            db.ref("users/" + item.val().imageUserId).on("value", (user) => {
-              const data = {
-                id: item.val().imageId,
-                user: {
-                  id: user.key,
-                  avatar: user.val().avatar,
-                  name: user.val().name,
-                  lastName: user.val().lastName,
-                },
-                image: s.val(),
-              };
-              setImages((prev) => [data, ...prev]);
+      if (snap.val()) {
+        snap.forEach((item) => {
+          db.ref("images/" + item.val().imageUserId)
+            .child(item.val().imageId)
+            .once("value", (s) => {
+              db.ref("users/" + item.val().imageUserId).on("value", (user) => {
+                const data = {
+                  id: item.val().imageId,
+                  user: {
+                    id: user.key,
+                    avatar: user.val().avatar,
+                    name: user.val().name,
+                    lastName: user.val().lastName,
+                  },
+                  image: s.val(),
+                };
+                setImages((prev) => [data, ...prev]);
+                setLoading(false);
+              });
             });
-          });
-      });
-
-      setLoading(false);
+        });
+      } else {
+        setLoading(false);
+      }
     });
   }, []);
 

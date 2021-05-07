@@ -25,6 +25,7 @@ import Modal from "../../components/Modal";
 import { db, storage } from "../../firebase";
 
 import classes from "./Profile.module.scss";
+import ToggleFollow from "../../components/ToggleFollow";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -33,7 +34,6 @@ const Profile = () => {
     (state) => state.profileReducer
   );
   const match = useRouteMatch();
-  const [follow, setFollow] = useState(false);
   const [followers, setFollowers] = useState(0);
   const [following, setFollowing] = useState(0);
   const [current, setCurrent] = useState(null);
@@ -86,6 +86,18 @@ const Profile = () => {
   useEffect(() => {
     dispatch(getProfileDataAction(match.params.id));
     dispatch(getImagesAction(match.params.id));
+
+    db.ref("followers/" + match.params.id).on("value", (snap) => {
+      snap.val()
+        ? setFollowers(Object.keys(snap.val()).length)
+        : setFollowers(0);
+    });
+
+    db.ref("following/" + match.params.id).on("value", (snap) => {
+      snap.val()
+        ? setFollowing(Object.keys(snap.val()).length)
+        : setFollowing(0);
+    });
   }, [match, dispatch]);
 
   return (
@@ -145,13 +157,7 @@ const Profile = () => {
                     />
                   </>
                 ) : (
-                  <div className={classes.buttons}>
-                    {!follow ? (
-                      <Button>Follow</Button>
-                    ) : (
-                      <Button danger>Unfollow</Button>
-                    )}
-                  </div>
+                  <ToggleFollow id={match.params.id} />
                 )}
               </div>
             </>
