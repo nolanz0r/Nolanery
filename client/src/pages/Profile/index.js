@@ -26,6 +26,7 @@ import {
 import Modal from "../../components/Modal";
 import { db, storage } from "../../firebase";
 import ToggleFollow from "../../components/ToggleFollow";
+import { formatDate } from "../../utils/formatDate";
 
 import classes from "./Profile.module.scss";
 
@@ -215,7 +216,7 @@ const Profile = () => {
           </div>
           <div className={classes.modalFooter}>
             <span>{`${current + 1} / ${Object.values(images).length}`}</span>
-            <span>{Object.values(images)[current].createdAt}</span>
+            <span>{formatDate(Object.values(images)[current].createdAt)}</span>
           </div>
         </Modal>
       )}

@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import Avatar from "../../components/Avatar";
+import { formatDate } from "../../utils/formatDate";
 import ToggleLike from "../ToggleLike";
 
 import classes from "./PageImage.module.scss";
@@ -45,7 +46,7 @@ const PageImage = ({ images, children }) => {
                     likeCounter={true}
                   />
                 </div>
-                <span>{data.image.createdAt}</span>
+                <span>{formatDate(data.image.createdAt)}</span>
               </div>
             </div>
           ))}

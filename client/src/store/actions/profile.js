@@ -51,18 +51,20 @@ export const addImageAction = (e, id) => {
           e.preventDefault();
 
           uploadTask.getDownloadURL().then((url) => {
+            const date = new Date();
+            date.setHours(date.getHours() + 3);
+
             db.ref("images/" + id)
               .push({
                 imageUrl: url,
                 imageName: imageName,
-                createdAt: new Date().toISOString(),
+                createdAt: date.toISOString(),
               })
               .then(dispatch(getImagesAction(id)));
           });
           e.target.value = "";
-          setTimeout(() => {
-            dispatch({ type: PROGRESS, payload: 0 });
-          }, 550);
+          dispatch({ type: PROGRESS, payload: 0 });
+          dispatch({ type: LOADING_IMAGES, payload: true });
         }
       );
     } catch (e) {}
