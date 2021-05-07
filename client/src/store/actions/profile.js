@@ -98,7 +98,7 @@ export const removeImageLikeAction = (imageId, imageUserId, userId, image) => {
 export const getImagesAction = (id) => {
   return (dispatch) => {
     try {
-      db.ref("images/" + id).on("value", (snap) => {
+      db.ref("images/" + id).once("value", (snap) => {
         if (snap.val()) {
           dispatch({
             type: GET_IMAGES,

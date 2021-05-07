@@ -42,8 +42,8 @@ const PageImage = ({ images, children }) => {
                       data.image.likes &&
                       Object.values(data.image.likes).includes(user.id)
                     }
+                    likeCounter={true}
                   />
-                  {data.image.likes && Object.keys(data.image.likes).length}
                 </div>
                 <span>{data.image.createdAt}</span>
               </div>

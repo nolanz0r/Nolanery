@@ -28,6 +28,7 @@ import { db, storage } from "../../firebase";
 
 import classes from "./Profile.module.scss";
 import ToggleFollow from "../../components/ToggleFollow";
+import ToggleLike from "../../components/ToggleLike";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -147,7 +148,7 @@ const Profile = () => {
                     />
                   </>
                 ) : (
-                  <ToggleFollow id={match.params.id} />
+                  <ToggleFollow id={match.params.id} likeCounter={false} />
                 )}
               </div>
             </>
