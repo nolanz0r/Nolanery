@@ -6,6 +6,7 @@ import {
   GET_FOLLOWERS,
   ADD_FOLLOW,
   REMOVE_FOLLOW,
+  ADD_IMAGE,
 } from "../actions/profile";
 
 const initialState = {
@@ -30,6 +31,12 @@ export const profileReducer = (state = initialState, action) => {
       return {
         ...state,
         images: Object.fromEntries(reversed),
+      };
+
+    case ADD_IMAGE:
+      return {
+        ...state,
+        images: state.images.push(action.payload),
       };
 
     case PROFILE_DATA:

@@ -4,10 +4,28 @@ import { v4 as uuidv4 } from "uuid";
 export const PROGRESS = "PROGRESS";
 export const PROFILE_DATA = "PROFILE_DATA";
 export const GET_IMAGES = "GET_IMAGES";
+export const ADD_IMAGE = "ADD_IMAGE";
 export const GET_FOLLOWERS = "GET_FOLLOWERS";
 export const GET_FOLLOWING = "GET_FOLLOWING";
 export const ADD_FOLLOW = "ADD_FOLLOW";
 export const REMOVE_FOLLOW = "REMOVE_FOLLOW";
+
+export const getImagesAction = (id) => {
+  return (dispatch) => {
+    try {
+      db.ref("images/" + id).once("value", (snap) => {
+        if (snap.val()) {
+          dispatch({
+            type: GET_IMAGES,
+            payload: snap.val(),
+          });
+        } else {
+          dispatch({ type: GET_IMAGES, payload: [] });
+        }
+      });
+    } catch (e) {}
+  };
+};
 
 export const addImageAction = (e, id) => {
   return async (dispatch) => {
@@ -28,11 +46,13 @@ export const addImageAction = (e, id) => {
           e.preventDefault();
 
           uploadTask.getDownloadURL().then((url) => {
-            db.ref("images/" + id).push({
-              imageUrl: url,
-              imageName: imageName,
-              createdAt: new Date().toISOString(),
-            });
+            db.ref("images/" + id)
+              .push({
+                imageUrl: url,
+                imageName: imageName,
+                createdAt: new Date().toISOString(),
+              })
+              .then(dispatch(getImagesAction(id)));
           });
           e.target.value = "";
           setTimeout(() => {
@@ -90,23 +110,6 @@ export const removeImageLikeAction = (imageId, imageUserId, userId, image) => {
               .child(item.key)
               .remove()
         );
-      });
-    } catch (e) {}
-  };
-};
-
-export const getImagesAction = (id) => {
-  return (dispatch) => {
-    try {
-      db.ref("images/" + id).once("value", (snap) => {
-        if (snap.val()) {
-          dispatch({
-            type: GET_IMAGES,
-            payload: snap.val(),
-          });
-        } else {
-          dispatch({ type: GET_IMAGES, payload: [] });
-        }
       });
     } catch (e) {}
   };

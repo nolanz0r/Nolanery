@@ -81,7 +81,8 @@ const Profile = () => {
                 .remove()
           );
         })
-      );
+      )
+      .then(dispatch(getImagesAction(match.params.id)));
   };
 
   useEffect(() => {
