@@ -127,16 +127,24 @@ export const followAction = (id, userId) => {
 export const unFollowAction = (id, userId) => {
   return (dispatch) => {
     try {
-      db.ref("following/" + userId).once("child_added", (snap) => {
-        db.ref("following/" + userId)
-          .child(snap.key)
-          .remove();
+      db.ref("following/" + userId).once("value", (snap) => {
+        for (let i in snap.val()) {
+          snap.val()[i] === id &&
+            db
+              .ref("following/" + userId)
+              .child(i)
+              .remove();
+        }
       });
 
-      db.ref("followers/" + id).once("child_added", (snap) => {
-        db.ref("followers/" + id)
-          .child(snap.key)
-          .remove();
+      db.ref("followers/" + id).once("value", (snap) => {
+        for (let i in snap.val()) {
+          snap.val()[i] === userId &&
+            db
+              .ref("followers/" + id)
+              .child(i)
+              .remove();
+        }
       });
 
       dispatch({ type: REMOVE_FOLLOW });
