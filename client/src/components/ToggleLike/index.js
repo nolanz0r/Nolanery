@@ -17,7 +17,6 @@ const ToggleLike = ({ data, liked, likeCounter }) => {
   const history = useHistory();
   let likes = data.image.likes ? Object.keys(data.image.likes).length : 0;
   const [countOfLikes, setCountOfLikes] = useState(likes);
-
   const [like, setLike] = useState(liked || false);
 
   const addLikeHandler = () => {

@@ -7,9 +7,11 @@ import {
   ADD_FOLLOW,
   REMOVE_FOLLOW,
   ADD_IMAGE,
+  LOADING_IMAGES,
 } from "../actions/profile";
 
 const initialState = {
+  loading: true,
   progress: 0,
   images: [],
   currentUser: {},
@@ -19,6 +21,11 @@ const initialState = {
 
 export const profileReducer = (state = initialState, action) => {
   switch (action.type) {
+    case LOADING_IMAGES:
+      return {
+        ...state,
+        loading: action.payload,
+      };
     case PROGRESS:
       return {
         ...state,

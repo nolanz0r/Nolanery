@@ -61,7 +61,7 @@ const Trends = () => {
         images
           .filter((image, i) => random.includes(i) && image)
           .map((item) => {
-            return db.ref("users/" + item.userId).on("value", (user) => {
+            return db.ref("users/" + item.userId).once("value", (user) => {
               const data = {
                 id: item.id,
                 user: {

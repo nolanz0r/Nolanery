@@ -25,17 +25,21 @@ import {
 } from "../../store/actions/profile";
 import Modal from "../../components/Modal";
 import { db, storage } from "../../firebase";
+import ToggleFollow from "../../components/ToggleFollow";
 
 import classes from "./Profile.module.scss";
-import ToggleFollow from "../../components/ToggleFollow";
-import ToggleLike from "../../components/ToggleLike";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.authReducer);
-  const { progress, currentUser, images, following, followers } = useSelector(
-    (state) => state.profileReducer
-  );
+  const {
+    progress,
+    currentUser,
+    images,
+    following,
+    followers,
+    loading,
+  } = useSelector((state) => state.profileReducer);
   const match = useRouteMatch();
   const [current, setCurrent] = useState(null);
   const history = useHistory();
@@ -86,10 +90,10 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    dispatch(getProfileDataAction(match.params.id));
-    dispatch(getImagesAction(match.params.id));
     dispatch(getFollowers(match.params.id));
     dispatch(getFollowing(match.params.id));
+    dispatch(getProfileDataAction(match.params.id));
+    dispatch(getImagesAction(match.params.id));
   }, [match, dispatch]);
 
   return (
@@ -154,8 +158,7 @@ const Profile = () => {
               </div>
             </>
           )}
-
-          {progress ? (
+          {progress || loading ? (
             <div className={classes.cards}>
               <Loader width="40px" />
             </div>
