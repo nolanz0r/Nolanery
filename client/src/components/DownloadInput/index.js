@@ -9,6 +9,7 @@ const DownloadInput = ({ onChange, children }) => {
       <input
         type="file"
         id="download"
+        accept="image/jpeg, image/jpg, image/png"
         className={classes.downloadInput}
         onChange={onChange}
       />
