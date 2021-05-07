@@ -8,7 +8,25 @@
 }
 
 .downloadLabel {
+  margin: 10px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 6px 14px;
+  font-size: 15px;
   display: flex;
+  justify-content: center;
   align-items: center;
   cursor: pointer;
+  transition: all 0.1s ease-in-out;
+  outline: none;
+  background: transparent;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
 }
