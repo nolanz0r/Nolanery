@@ -14,7 +14,7 @@ import Loader from "./components/Loader";
 import SetAvatar from "./pages/SetAvatar";
 import Edit from "./pages/Edit";
 
-import classes from "./styles/App.module.scss";
+import classes from "./static/styles/App.module.scss";
 import Liked from "./pages/Liked";
 import Feed from "./pages/Feed";
 

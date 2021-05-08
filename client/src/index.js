@@ -6,7 +6,7 @@ import { store } from "./store/store";
 import { createBrowserHistory } from "history";
 
 import App from "./App";
-import "./styles/common.scss";
+import "./static/styles/common.scss";
 
 export const history = createBrowserHistory();
 
