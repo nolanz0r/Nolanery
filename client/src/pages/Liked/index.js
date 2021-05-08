@@ -39,7 +39,7 @@ const Liked = () => {
         setLoading(false);
       }
     });
-  }, []);
+  }, [user.id]);
 
   return (
     <>
