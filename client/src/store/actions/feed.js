@@ -34,6 +34,7 @@ export const getFeedData = (id) => {
                 });
               });
           });
+          
           Promise.all(
             images.map((item) => item.then((a) => Promise.all(a)))
           ).then((result) => {
