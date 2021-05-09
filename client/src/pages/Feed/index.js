@@ -26,7 +26,7 @@ const Feed = () => {
           {images.length > 0 ? (
             <PageImage images={images} />
           ) : (
-            <h2 className={classes.emptyTitle}>No liked images</h2>
+            <h2 className={classes.emptyTitle}>No following users</h2>
           )}
         </>
       )}

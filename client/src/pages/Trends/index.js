@@ -3,45 +3,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { db } from "../../firebase";
 import Loader from "../../components/Loader";
 import { getArrayOfRandomNumbers } from "../../utils/randomNumbersArray";
+import PageImage from "../../components/PageImage";
+import { observer } from "../../utils/observer";
 
 import classes from "./Trends.module.scss";
-import PageImage from "../../components/PageImage";
 
 const Trends = () => {
   const [images, setImages] = useState([]);
   const loadRef = useRef(null);
-
-  // const getUsers = () => {
-  //   fetch(
-  //     "https://api.unsplash.com/photos/random/?count=30&client_id=JI-6PbuY2rD5CKt5VTCLiKdVkiNWUpIp_AnGkId8uE8"
-  //   )
-  //     .then((data) => data.json())
-  //     .then((json) => {
-  //       json.map((image) =>
-  //         fetch(
-  //           `https://api.unsplash.com/users/${image.user.username}/photos?client_id=JI-6PbuY2rD5CKt5VTCLiKdVkiNWUpIp_AnGkId8uE8`
-  //         )
-  //           .then((data) => data.json())
-  //           .then((json) => {
-  //             db.ref("users")
-  //               .push({
-  //                 avatar: json[0].user.profile_image.large,
-  //                 email: "",
-  //                 name: json[0].user.first_name,
-  //                 lastName: json[0].user.last_name,
-  //               })
-  //               .then((snap) => {
-  //                 json.map((image) =>
-  //                   db.ref("images/" + snap.key).push({
-  //                     imageUrl: image.urls.regular,
-  //                     createdAt: image.created_at,
-  //                   })
-  //                 );
-  //               });
-  //           })
-  //       );
-  //     });
-  // };
 
   useEffect(() => {
     const getImages = () => {
@@ -78,22 +47,7 @@ const Trends = () => {
       });
     };
 
-    // getUsers();
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          getImages();
-        }
-      },
-      {
-        root: null,
-        rootMargin: "0px",
-        threshold: 0.1,
-      }
-    );
-    if (loadRef.current) {
-      observer.observe(loadRef.current);
-    }
+    observer(loadRef, getImages);
   }, [loadRef]);
 
   return (
