@@ -53,39 +53,6 @@ export const getFeedData = (id) => {
           dispatch({ type: LOADING_FEED, payload: false });
         }
       });
-
-      //   db.ref("feed/" + id).on("value", (item) => {
-      //     if (item.val()) {
-      //       const feedArray = Object.values(item.val()).map((feedItem) => {
-      //         const user = db.ref("users/" + feedItem.userId).once("value");
-
-      //         return db
-      //           .ref("images/" + feedItem.userId)
-      //           .child(feedItem.imageId)
-      //           .once("value")
-      //           .then((image) => {
-      //             return user.then((user) => {
-      //               return {
-      //                 id: image.key,
-      //                 user: {
-      //                   id: user.key,
-      //                   avatar: user.val().avatar,
-      //                   name: user.val().name,
-      //                   lastName: user.val().lastName,
-      //                 },
-      //                 image: image.val(),
-      //               };
-      //             });
-      //           });
-      //       });
-      //       Promise.all(feedArray).then((item) => {
-      //         dispatch({ type: GET_FEED, payload: item });
-      //         dispatch({ type: LOADING_FEED, payload: false });
-      //       });
-      //     } else {
-      //       dispatch({ type: LOADING_FEED, payload: false });
-      //     }
-      //   });
     } catch (e) {}
   };
 };
