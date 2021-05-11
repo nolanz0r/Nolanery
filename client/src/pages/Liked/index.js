@@ -1,62 +1,55 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../components/Loader";
 
 import PageImage from "../../components/PageImage";
-import { db } from "../../firebase";
+import {
+  addLikedAction,
+  getLikedData,
+  resetLikedAction,
+} from "../../store/actions/liked";
+import { observer } from "../../utils/observer";
 
 import classes from "./Liked.module.scss";
 
 const Liked = () => {
+  const loadRef = useRef(null);
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.authReducer);
-  const [images, setImages] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { images, loading } = useSelector((state) => state.likedReducer);
 
   useEffect(() => {
-    db.ref("liked/" + user.id).once("value", (snap) => {
-      if (snap.val()) {
-        snap.forEach((item) => {
-          db.ref("images/" + item.val().imageUserId)
-            .child(item.val().imageId)
-            .once("value", (s) => {
-              db.ref("users/" + item.val().imageUserId).on("value", (user) => {
-                const data = {
-                  id: item.val().imageId,
-                  user: {
-                    id: user.key,
-                    avatar: user.val().avatar,
-                    name: user.val().name,
-                    lastName: user.val().lastName,
-                  },
-                  image: s.val(),
-                };
-                setImages((prev) => [data, ...prev]);
-                setLoading(false);
-              });
-            });
-        });
-      } else {
-        setLoading(false);
-      }
+    dispatch(resetLikedAction());
+  }, [dispatch]);
+
+  useEffect(() => {
+    observer(loadRef, () => {
+      dispatch(addLikedAction(user.id));
+      dispatch(getLikedData(user.id));
     });
-  }, [user.id]);
+  }, [loadRef, dispatch, user]);
 
   return (
-    <>
-      {loading ? (
-        <div className={classes.emptyTitle}>
+    <PageImage images={images}>
+      <div
+        ref={loadRef}
+        className={
+          images.length % 10 === 0
+            ? !images.length
+              ? classes.emptyTitle
+              : classes.loadMoreLoader
+            : classes.hideLoader
+        }
+      >
+        {loading ? (
           <Loader width="60px" />
-        </div>
-      ) : (
-        <>
-          {images.length > 0 ? (
-            <PageImage images={images} />
-          ) : (
-            <h2 className={classes.emptyTitle}>No liked images</h2>
-          )}
-        </>
-      )}
-    </>
+        ) : (
+          <div className={classes.loadMoreLoader}>
+            <h2>No liked images</h2>
+          </div>
+        )}
+      </div>
+    </PageImage>
   );
 };
 

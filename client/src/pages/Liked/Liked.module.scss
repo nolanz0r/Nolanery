@@ -4,3 +4,14 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.loadMoreLoader {
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hideLoader {
+  display: none;
+}
