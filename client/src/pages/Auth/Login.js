@@ -32,7 +32,7 @@ const Login = () => {
           type="text"
           name="email"
           placeholder="Email"
-          value={values.email}
+          value={values.email || ""}
           onChange={handleChange}
         />
         <input
@@ -40,7 +40,7 @@ const Login = () => {
           type="password"
           name="password"
           placeholder="Password"
-          value={values.password}
+          value={values.password || ""}
           onChange={handleChange}
         />
         <Button>Sign in</Button>

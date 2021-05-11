@@ -34,7 +34,7 @@ const Register = () => {
             type="text"
             name="name"
             placeholder="Name"
-            value={values.name}
+            value={values.name || ""}
             onChange={handleChange}
           />
           <input
@@ -42,7 +42,7 @@ const Register = () => {
             type="text"
             name="lastName"
             placeholder="Last name"
-            value={values.lastName}
+            value={values.lastName || ""}
             onChange={handleChange}
           />
         </div>
@@ -51,7 +51,7 @@ const Register = () => {
           type="text"
           name="email"
           placeholder="Email"
-          value={values.email}
+          value={values.email || ""}
           onChange={handleChange}
         />
         <input
@@ -59,7 +59,7 @@ const Register = () => {
           type="password"
           name="password"
           placeholder="Password"
-          value={values.password}
+          value={values.password || ""}
           onChange={handleChange}
         />
         <Button>Sign Up</Button>
