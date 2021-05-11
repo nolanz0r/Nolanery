@@ -1,36 +1,54 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../components/Loader";
 import PageImage from "../../components/PageImage";
-import { getFeedData } from "../../store/actions/feed";
+import {
+  addFeedAction,
+  getFeedData,
+  resetFeedAction,
+} from "../../store/actions/feed";
+import { observer } from "../../utils/observer";
 
 import classes from "./Feed.module.scss";
 
 const Feed = () => {
+  const loadRef = useRef(null);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.authReducer);
-  const { loading, images } = useSelector((state) => state.feedReducer);
+  const { images, loading } = useSelector((state) => state.feedReducer);
 
   useEffect(() => {
-    dispatch(getFeedData(user.id));
-  }, [user.id, dispatch]);
+    dispatch(resetFeedAction());
+  }, [dispatch]);
+
+  useEffect(() => {
+    observer(loadRef, () => {
+      dispatch(addFeedAction(user.id));
+      dispatch(getFeedData(user.id));
+    });
+  }, [loadRef, dispatch, user]);
 
   return (
-    <>
-      {loading ? (
-        <div className={classes.emptyTitle}>
+    <PageImage images={images}>
+      <div
+        ref={loadRef}
+        className={
+          images.length % 10 === 0
+            ? !images.length
+              ? classes.emptyTitle
+              : classes.loadMoreLoader
+            : classes.hideLoader
+        }
+      >
+        {loading ? (
           <Loader width="60px" />
-        </div>
-      ) : (
-        <>
-          {images.length > 0 ? (
-            <PageImage images={images} />
-          ) : (
-            <h2 className={classes.emptyTitle}>No following users</h2>
-          )}
-        </>
-      )}
-    </>
+        ) : (
+          <div className={classes.loadMoreLoader}>
+            <h2>No feed here. Follow someone to see their activities</h2>
+          </div>
+        )}
+      </div>
+    </PageImage>
   );
 };
 
