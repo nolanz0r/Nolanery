@@ -44,7 +44,7 @@ const Feed = () => {
           <Loader width="60px" />
         ) : (
           <div className={classes.loadMoreLoader}>
-            <h2>No feed here. Follow someone to see their activities</h2>
+            <h2>Follow someone to see their activities</h2>
           </div>
         )}
       </div>
