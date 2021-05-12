@@ -1,5 +1,6 @@
 import { history } from "../../index";
 import { auth, db, storage } from "../../firebase";
+import { toast } from "react-toastify";
 
 export const LOADING = "LOADING";
 export const LOGGED_IN = "LOGGED_IN";
@@ -117,6 +118,29 @@ export const logoutAction = () => {
         .then(dispatch({ type: LOGGED_IN, payload: false }))
         .then(history.push("/login"));
     } catch (e) {}
+  };
+};
+
+export const changePasswordAction = (values) => {
+  return async (dispatch) => {
+    const { password, repeatPassword } = values;
+
+    try {
+      if (password === repeatPassword) {
+        await auth.currentUser.updatePassword(password).then(
+          () => {
+            return toast.success("Password updated");
+          },
+          (error) => {
+            return toast.error("Something goes wrong. Try later");
+          }
+        );
+      } else {
+        return toast.error("Passwords not the same");
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 };
 

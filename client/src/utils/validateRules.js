@@ -21,6 +21,22 @@ export const registerValidation = (values) => {
   return errors;
 };
 
+export const changePasswordValidation = (values) => {
+  const errors = {};
+
+  if (!values.password) {
+    errors.password = "Password is required";
+  } else if (values.password.length < 6) {
+    errors.password = "Password must be 6 or more characters";
+  }
+  if (!values.repeatPassword) {
+    errors.password = "Repeat password is required";
+  } else if (values.password.length < 6) {
+    errors.password = "Password must be 6 or more characters";
+  }
+  return errors;
+};
+
 const commonValidation = (values, errors) => {
   if (!values.email) {
     errors.email = "Email address is required";

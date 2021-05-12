@@ -33,14 +33,8 @@ import classes from "./Profile.module.scss";
 const Profile = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.authReducer);
-  const {
-    progress,
-    currentUser,
-    images,
-    following,
-    followers,
-    loading,
-  } = useSelector((state) => state.profileReducer);
+  const { progress, currentUser, images, following, followers, loading } =
+    useSelector((state) => state.profileReducer);
   const match = useRouteMatch();
   const [current, setCurrent] = useState(null);
   const history = useHistory();
@@ -121,7 +115,7 @@ const Profile = () => {
                   </div>
                   <ul className={classes.info}>
                     <li className={classes.infoItem}>
-                      Photos:
+                      Posts:
                       <span>{(images && Object.keys(images).length) || 0}</span>
                     </li>
                     <li className={classes.infoItem}>
