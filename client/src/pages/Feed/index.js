@@ -15,7 +15,7 @@ const Feed = () => {
   const loadRef = useRef(null);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.authReducer);
-  const { images, loading } = useSelector((state) => state.feedReducer);
+  const { images, loading, chunks } = useSelector((state) => state.feedReducer);
 
   useEffect(() => {
     dispatch(resetFeedAction());
@@ -33,7 +33,7 @@ const Feed = () => {
       <div
         ref={loadRef}
         className={
-          images.length % 10 === 0
+          chunks !== images.length / 10
             ? !images.length
               ? classes.emptyTitle
               : classes.loadMoreLoader

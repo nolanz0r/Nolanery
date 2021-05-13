@@ -1,10 +1,16 @@
 import { chunk } from "../../utils/chunk";
-import { GET_LIKED, RESET_LIKED, ADD_LIKED, LIKED_LOADING } from "../actions/liked";
+import {
+  GET_LIKED,
+  RESET_LIKED,
+  ADD_LIKED,
+  LIKED_LOADING,
+} from "../actions/liked";
 
 const initialState = {
   images: [],
   current: 0,
   loading: null,
+  chunks: null,
 };
 
 export const likedReducer = (state = initialState, action) => {
@@ -21,6 +27,7 @@ export const likedReducer = (state = initialState, action) => {
       return {
         ...state,
         images: [...state.images, ...chunkedImages[state.current]],
+        chunks: chunkedImages.length,
       };
 
     case ADD_LIKED:

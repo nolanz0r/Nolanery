@@ -5,6 +5,7 @@ const initialState = {
   images: [],
   current: 0,
   loading: null,
+  chunks: null,
 };
 
 export const feedReducer = (state = initialState, action) => {
@@ -21,6 +22,7 @@ export const feedReducer = (state = initialState, action) => {
       return {
         ...state,
         images: [...state.images, ...chunkedImages[state.current]],
+        chunks: chunkedImages.length,
       };
 
     case ADD_FEED:
