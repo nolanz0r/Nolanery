@@ -45,7 +45,9 @@ export const getLikedData = (id) => {
           dispatch({ type: LIKED_LOADING, payload: false });
         }
       });
-    } catch (e) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 };
 

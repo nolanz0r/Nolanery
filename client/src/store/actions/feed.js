@@ -55,7 +55,9 @@ export const getFeedData = (id) => {
           dispatch({ type: FEED_LOADING, payload: false });
         }
       });
-    } catch (e) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 };
 

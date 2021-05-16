@@ -28,7 +28,9 @@ export const getImagesAction = (id) => {
           dispatch({ type: LOADING_IMAGES, payload: false });
         }
       });
-    } catch (e) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 };
 
@@ -44,8 +46,8 @@ export const addImageAction = (e, id) => {
             (snapshot.bytesTransferred / snapshot.totalBytes) * 110;
           dispatch({ type: PROGRESS, payload: progress });
         },
-        (error) => {
-          // Handle unsuccessful uploads
+        (err) => {
+          console.log(err);
         },
         () => {
           e.preventDefault();
@@ -67,7 +69,9 @@ export const addImageAction = (e, id) => {
           dispatch({ type: LOADING_IMAGES, payload: true });
         }
       );
-    } catch (e) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 };
 
@@ -80,7 +84,9 @@ export const getProfileDataAction = (id) => {
           payload: Object.assign({}, snap.val(), { id: snap.key }),
         });
       });
-    } catch (e) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 };
 
@@ -92,7 +98,9 @@ export const addImageLikeAction = (imageId, imageUserId, userId) => {
         .push(userId);
 
       db.ref("liked/" + userId).push({ imageId, imageUserId });
-    } catch (e) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 };
 
@@ -118,7 +126,9 @@ export const removeImageLikeAction = (imageId, imageUserId, userId, image) => {
               .remove()
         );
       });
-    } catch (e) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 };
 
@@ -130,7 +140,9 @@ export const followAction = (id, userId) => {
       db.ref("followers/" + id).push(userId);
 
       dispatch({ type: ADD_FOLLOW });
-    } catch (e) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 };
 
@@ -158,7 +170,9 @@ export const unFollowAction = (id, userId) => {
       });
 
       dispatch({ type: REMOVE_FOLLOW });
-    } catch (e) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 };
 
@@ -176,7 +190,9 @@ export const getFollowing = (id) => {
               payload: 0,
             });
       });
-    } catch (e) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 };
 
@@ -194,6 +210,8 @@ export const getFollowers = (id) => {
               payload: 0,
             });
       });
-    } catch (e) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 };
