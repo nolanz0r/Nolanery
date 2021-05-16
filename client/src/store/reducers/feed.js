@@ -38,6 +38,7 @@ export const feedReducer = (state = initialState, action) => {
         ...state,
         images: [],
         currentChunk: -1,
+        current: 0,
         chunks: null,
       };
 
