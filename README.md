@@ -19,3 +19,9 @@ Live demo - https://react-gallery-9f127.web.app
   - Express
   - MongoDB
 - Make code clean
+
+## Local installation:
+
+- Clone
+- Npm install
+- Npm start
