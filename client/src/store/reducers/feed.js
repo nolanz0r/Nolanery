@@ -3,6 +3,7 @@ import { GET_FEED, RESET_FEED, ADD_FEED, FEED_LOADING } from "../actions/feed";
 
 const initialState = {
   images: [],
+  currentChunk: 0,
   current: 0,
   loading: null,
   chunks: null,
@@ -21,21 +22,23 @@ export const feedReducer = (state = initialState, action) => {
 
       return {
         ...state,
-        images: [...state.images, ...chunkedImages[state.current]],
+        images: [...state.images, ...chunkedImages[state.currentChunk]],
         chunks: chunkedImages.length,
+        current: state.currentChunk + 1,
       };
 
     case ADD_FEED:
       return {
         ...state,
-        current: state.current + 1,
+        currentChunk: state.currentChunk + 1,
       };
 
     case RESET_FEED:
       return {
         ...state,
         images: [],
-        current: -1,
+        currentChunk: -1,
+        chunks: null,
       };
 
     default:

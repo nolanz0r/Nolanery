@@ -16,7 +16,7 @@ const Liked = () => {
   const loadRef = useRef(null);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.authReducer);
-  const { images, loading, chunks } = useSelector(
+  const { images, loading, chunks, current } = useSelector(
     (state) => state.likedReducer
   );
 
@@ -36,7 +36,7 @@ const Liked = () => {
       <div
         ref={loadRef}
         className={
-          chunks !== images.length / 10
+          chunks !== current
             ? !images.length
               ? classes.emptyTitle
               : classes.loadMoreLoader

@@ -8,6 +8,7 @@ import {
 
 const initialState = {
   images: [],
+  currentChunk: 0,
   current: 0,
   loading: null,
   chunks: null,
@@ -26,21 +27,24 @@ export const likedReducer = (state = initialState, action) => {
 
       return {
         ...state,
-        images: [...state.images, ...chunkedImages[state.current]],
+        images: [...state.images, ...chunkedImages[state.currentChunk]],
         chunks: chunkedImages.length,
+        current: state.currentChunk + 1,
       };
 
     case ADD_LIKED:
       return {
         ...state,
-        current: state.current + 1,
+        currentChunk: state.currentChunk + 1,
       };
 
     case RESET_LIKED:
       return {
         ...state,
         images: [],
-        current: -1,
+        currentChunk: -1,
+        current: 0,
+        chunks: null,
       };
 
     default:
