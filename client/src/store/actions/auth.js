@@ -18,7 +18,7 @@ export const loginAction = (values) => {
         });
       });
     } catch (err) {
-      console.log(err);
+      return toast.error(err);
     }
   };
 };
@@ -43,7 +43,9 @@ export const registerAction = (values) => {
           });
         });
       history.push("/avatar");
-    } catch (e) {}
+    } catch (err) {
+      return toast.error(err);
+    }
   };
 };
 
@@ -66,7 +68,9 @@ export const providerRegisterAction = (provider) => {
       });
 
       history.push("/avatar");
-    } catch (error) {}
+    } catch (err) {
+      return toast.error(err);
+    }
   };
 };
 
@@ -99,7 +103,9 @@ export const userAuthAction = () => {
           dispatch({ type: LOADING, payload: false });
         }
       });
-    } catch (e) {}
+    } catch (err) {
+      return toast.error(err);
+    }
   };
 };
 
@@ -117,7 +123,9 @@ export const logoutAction = () => {
         )
         .then(dispatch({ type: LOGGED_IN, payload: false }))
         .then(history.push("/login"));
-    } catch (e) {}
+    } catch (err) {
+      return toast.error(err);
+    }
   };
 };
 
@@ -139,7 +147,7 @@ export const changePasswordAction = (values) => {
         return toast.error("Passwords not the same");
       }
     } catch (err) {
-      console.log(err);
+      return toast.error(err);
     }
   };
 };
@@ -149,7 +157,9 @@ export const defaultAvatar = (id, avatar) => {
     try {
       await db.ref("users/" + id).update({ avatar });
       history.push("/");
-    } catch (e) {}
+    } catch (err) {
+      return toast.error(err);
+    }
   };
 };
 
@@ -164,7 +174,9 @@ export const newAvatar = (id, avatarFile) => {
         });
         history.push("/");
       });
-    } catch (e) {}
+    } catch (err) {
+      return toast.error(err);
+    }
   };
 };
 
@@ -181,7 +193,9 @@ export const changeName = (id, name) => {
     try {
       await db.ref("users/" + id).update({ name });
       history.push("/");
-    } catch (e) {}
+    } catch (err) {
+      return toast.error(err);
+    }
   };
 };
 
@@ -190,6 +204,8 @@ export const changeLastName = (id, lastName) => {
     try {
       await db.ref("users/" + id).update({ lastName });
       history.push("/");
-    } catch (e) {}
+    } catch (err) {
+      return toast.error(err);
+    }
   };
 };
